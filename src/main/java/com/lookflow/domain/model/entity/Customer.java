@@ -18,11 +18,9 @@ public class Customer extends AggregateRoot<CustomerId> {
 
     private final LocalDate registerDate;
 
-    private boolean active;
 
-    public Customer(LocalDate registerDate, String phoneNumber, Email email, String name, LocalDate registerDate1) {
+    public Customer(LocalDate registerDate, String phoneNumber, Email email, String name) {
         super(new CustomerId(UUID.randomUUID()));
-        setActive(true);
         setPhoneNumber(phoneNumber);
         setEmail(email);
         setName(name);
@@ -36,9 +34,6 @@ public class Customer extends AggregateRoot<CustomerId> {
         this.name = name;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
     private void setEmail(Email email) {
         if(email == null) throw new DomainException("Email cannot be null");
         this.email = email;

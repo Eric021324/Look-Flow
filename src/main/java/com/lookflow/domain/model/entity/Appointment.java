@@ -2,8 +2,8 @@ package com.lookflow.domain.model.entity;
 
 import com.lookflow.domain.exception.DateException;
 import com.lookflow.domain.exception.IdException;
-import com.lookflow.domain.model.entity.state.AppointmentState;
-import com.lookflow.domain.model.entity.state.PendingState;
+import com.lookflow.domain.model.valueobject.appointmentstate.AppointmentState;
+import com.lookflow.domain.model.valueobject.appointmentstate.PendingState;
 import com.lookflow.domain.model.valueobject.AppointmentId;
 import com.lookflow.domain.model.valueobject.CustomerId;
 import com.lookflow.domain.model.valueobject.EmployeeId;

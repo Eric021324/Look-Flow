@@ -2,9 +2,8 @@ package com.lookflow.domain.model.valueobject;
 
 import java.util.UUID;
 
-public class EmployeeId extends BaseId<UUID>{
-
-    public EmployeeId(UUID value) {
+public class PaymentId extends BaseId<UUID>{
+    protected PaymentId(UUID value) {
         super(value);
     }
 }

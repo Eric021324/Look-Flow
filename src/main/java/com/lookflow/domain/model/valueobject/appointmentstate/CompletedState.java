@@ -1,9 +1,9 @@
-package com.lookflow.domain.model.entity.state;
+package com.lookflow.domain.model.valueobject.appointmentstate;
 
 import com.lookflow.domain.exception.AppointmentStateException;
 import com.lookflow.domain.model.entity.Appointment;
 
-public class CompletedState implements AppointmentState{
+public class CompletedState implements AppointmentState {
     @Override
     public void confirm(Appointment appointment) {
         throw new AppointmentStateException("An appointment in completed status cannot be changed to confirmed status");

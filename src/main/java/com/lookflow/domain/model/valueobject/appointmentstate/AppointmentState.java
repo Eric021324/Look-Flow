@@ -1,4 +1,4 @@
-package com.lookflow.domain.model.entity.state;
+package com.lookflow.domain.model.valueobject.appointmentstate;
 
 
 import com.lookflow.domain.model.entity.Appointment;
