@@ -84,4 +84,12 @@ public class Employee extends AggregateRoot<EmployeeId>{
         if(name.isEmpty()) throw new DomainException("Name cannot be empty");
         this.name=name;
     }
+
+    public List<WorkShift> getWorkShifts() {
+        return workShifts;
+    }
+
+    public void setWorkShifts(List<WorkShift> workShifts) {
+        setWorkShift(workShifts);
+    }
 }

@@ -56,4 +56,8 @@ public class Service extends AggregateRoot<ServiceId>{
         if(name.isEmpty()) throw new DomainException("Name cannot be empty");
         this.name = name;
     }
+
+    public boolean isActive() {
+        return active;
+    }
 }
