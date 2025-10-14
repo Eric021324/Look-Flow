@@ -15,7 +15,7 @@ import java.util.UUID;
 
 public class Appointment extends AggregateRoot<AppointmentId> {
 
-    private CustomerId customerId;
+    private final CustomerId customerId;
     private EmployeeId employeeId;
     private List<ServiceId>  serviceIds;
     private LocalDateTime startDate;
@@ -25,7 +25,8 @@ public class Appointment extends AggregateRoot<AppointmentId> {
     public Appointment(CustomerId customerId, EmployeeId employeeId, List<ServiceId> serviceIds,
                        LocalDateTime startDate, LocalDateTime endDate) {
         super(new AppointmentId(UUID.randomUUID()));
-        setCustomerId(customerId);
+        if(customerId == null) throw new IdException("Customer cannot be null");
+        this.customerId = customerId;
         setEmployeeId(employeeId);
         setServiceIds(serviceIds);
         setStartAndEndDate(startDate, endDate);
@@ -37,9 +38,20 @@ public class Appointment extends AggregateRoot<AppointmentId> {
         this.appointmentState = appointmentState;
     }
 
-    public void setCustomerId(CustomerId customerId) {
-        if(customerId == null) throw new IdException("Customer cannot be null");
-        this.customerId = customerId;
+    public void confirm(){
+        appointmentState.confirm(this);
+    }
+
+    public void cancel(){
+        appointmentState.cancel(this);
+    }
+
+    public void complete(){
+        appointmentState.complete(this);
+    }
+
+    private void setCustomerId(CustomerId customerId) {
+
     }
 
     private void setServiceIds(List<ServiceId> serviceIds) {
@@ -80,4 +92,6 @@ public class Appointment extends AggregateRoot<AppointmentId> {
     public AppointmentState getAppointmentState() {
         return appointmentState;
     }
+
+
 }

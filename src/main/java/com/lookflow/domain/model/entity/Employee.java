@@ -2,10 +2,7 @@ package com.lookflow.domain.model.entity;
 
 import com.lookflow.domain.exception.DomainException;
 import com.lookflow.domain.exception.WorkshiftOverlapedException;
-import com.lookflow.domain.model.valueobject.Address;
-import com.lookflow.domain.model.valueobject.EmployeeId;
-import com.lookflow.domain.model.valueobject.Rol;
-import com.lookflow.domain.model.valueobject.WorkShift;
+import com.lookflow.domain.model.valueobject.*;
 
 import java.util.*;
 
@@ -15,20 +12,20 @@ public class Employee extends AggregateRoot<EmployeeId>{
     private String name;
     private String firstSurname;
     private String secondSurname;
-    private String email;
+    private Email email;
     private Address address;
     private List<WorkShift> workShifts;
     private List<Service> services;
     private Rol rol;
 
-    public Employee(String name, String firstSurname, String secondSurname, String email, Address adress, List<WorkShift> workShifts, List<Service> services) {
+    public Employee(String name, String firstSurname, String secondSurname, Email email, Address adress, List<WorkShift> workShifts, List<Service> services) {
         super(new EmployeeId(UUID.randomUUID()));
         setName(name);
         setFirstSurname(firstSurname);
         setSecondSurname(secondSurname);
         setEmail(email);
         setAddress(adress);
-        setWorkShift(workShifts);
+        setWorkShifts(workShifts);
         setService(services);
     }
 
@@ -37,7 +34,7 @@ public class Employee extends AggregateRoot<EmployeeId>{
         this.services = services;
     }
 
-    private void setWorkShift(List<WorkShift> workShifts) {
+    public void setWorkShifts(List<WorkShift> workShifts) {
         if (workShifts == null)
             throw new DomainException("Work shift list cannot be null");
 
@@ -65,8 +62,9 @@ public class Employee extends AggregateRoot<EmployeeId>{
         this.address = address;
     }
 
-    private void setEmail(String email) {
-
+    private void setEmail(Email email) {
+        if(email == null) throw new DomainException("Email cannot be null");
+        this.email=email;
     }
 
     private void setSecondSurname(String secondSurname) {
@@ -89,7 +87,4 @@ public class Employee extends AggregateRoot<EmployeeId>{
         return workShifts;
     }
 
-    public void setWorkShifts(List<WorkShift> workShifts) {
-        setWorkShift(workShifts);
-    }
 }

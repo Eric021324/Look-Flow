@@ -83,21 +83,21 @@ public class AppointmentService implements CreateAppointmentUseCase, ConfirmAppo
     @Override
     public void confirmAppointment(AppointmentId appointmentId) {
         Appointment appointment = getAppointmentByIdOrThrow(appointmentId);
-        appointment.getAppointmentState().confirm(appointment);
+        appointment.confirm();
         appointmentRepository.save(appointment);
     }
 
     @Override
     public void cancelAppointment(AppointmentId appointmentId) {
         Appointment appointment = getAppointmentByIdOrThrow(appointmentId);
-        appointment.getAppointmentState().cancel(appointment);
+        appointment.cancel();
         appointmentRepository.save(appointment);
     }
 
     @Override
     public void completeAppointment(AppointmentId appointmentId) {
         Appointment appointment = getAppointmentByIdOrThrow(appointmentId);
-        appointment.getAppointmentState().complete(appointment);
+        appointment.complete();
         appointmentRepository.save(appointment);
     }
 

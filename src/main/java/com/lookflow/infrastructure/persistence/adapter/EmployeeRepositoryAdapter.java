@@ -2,6 +2,7 @@ package com.lookflow.infrastructure.persistence.adapter;
 
 import com.lookflow.application.port.output.EmployeeRepositoryPort;
 import com.lookflow.domain.model.entity.Employee;
+import com.lookflow.domain.model.valueobject.Email;
 import com.lookflow.domain.model.valueobject.EmployeeId;
 import com.lookflow.infrastructure.mapper.EmployeeMapper;
 import com.lookflow.infrastructure.persistence.entity.EmployeeEntity;
@@ -72,5 +73,15 @@ public class EmployeeRepositoryAdapter implements EmployeeRepositoryPort {
     @Override
     public boolean existsById(EmployeeId employeeId) {
         return jpaEmployeeRepository.existsById(employeeId.getValue());
+    }
+
+    @Override
+    public boolean existsByEmail(Email email) {
+        return jpaEmployeeRepository.existsByEmail(email.getValue());
+    }
+
+    @Override
+    public boolean existsByEmailAndNotId(Email email, EmployeeId currentEmployeeId) {
+        return jpaEmployeeRepository.existsByEmailAndIdNot(email.getValue(), currentEmployeeId.getValue());
     }
 }

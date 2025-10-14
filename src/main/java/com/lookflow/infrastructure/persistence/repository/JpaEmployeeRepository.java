@@ -24,5 +24,8 @@ public interface JpaEmployeeRepository extends JpaRepository<EmployeeEntity, UUI
     List<EmployeeEntity> findAvailableEmployees();
 
     boolean existsByEmail(String email);
+
+    @Query("SELECT COUNT(e) > 0 FROM EmployeeEntity e WHERE e.email = :email AND e.id <> :id")
+    boolean existsByEmailAndIdNot(@Param("email") String email, @Param("id") UUID id);
 }
 

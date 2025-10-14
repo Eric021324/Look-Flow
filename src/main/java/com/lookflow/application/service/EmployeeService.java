@@ -8,6 +8,7 @@ import com.lookflow.domain.exception.WorkshiftOverlapedException;
 import com.lookflow.domain.model.entity.Employee;
 import com.lookflow.domain.model.entity.Service;
 import com.lookflow.domain.model.valueobject.Address;
+import com.lookflow.domain.model.valueobject.Email;
 import com.lookflow.domain.model.valueobject.EmployeeId;
 import com.lookflow.domain.model.valueobject.WorkShift;
 
@@ -29,7 +30,7 @@ public class EmployeeService implements RegisterEmployeeUseCase, UpdateEmployeeU
 
     @Override
     public Employee registerEmployee(String name, String firstSurname, String secondSurname, 
-                                   String email, Address address, List<WorkShift> workShifts, 
+                                   Email email, Address address, List<WorkShift> workShifts,
                                    List<Service> services) {
         
         // Validar que el email no esté ya registrado
@@ -43,17 +44,14 @@ public class EmployeeService implements RegisterEmployeeUseCase, UpdateEmployeeU
                 throw new DomainException("Service not found with ID: " + service.getId());
             }
         }
-        
-        // Validar que no hay turnos superpuestos
-        validateWorkShifts(workShifts);
-        
+
         Employee employee = new Employee(name, firstSurname, secondSurname, email, address, workShifts, services);
         return employeeRepository.save(employee);
     }
 
     @Override
     public Employee updateEmployee(EmployeeId employeeId, String name, String firstSurname, 
-                                 String secondSurname, String email, Address address, 
+                                 String secondSurname, Email email, Address address,
                                  List<WorkShift> workShifts, List<Service> services) {
         
         // Validar que el empleado existe
@@ -70,10 +68,7 @@ public class EmployeeService implements RegisterEmployeeUseCase, UpdateEmployeeU
                 throw new DomainException("Service not found with ID: " + service.getId());
             }
         }
-        
-        // Validar que no hay turnos superpuestos
-        validateWorkShifts(workShifts);
-        
+
         Employee updatedEmployee = new Employee(name, firstSurname, secondSurname, email, address, workShifts, services);
         // Mantener el mismo ID - se maneja automáticamente por el repositorio
         
@@ -86,10 +81,6 @@ public class EmployeeService implements RegisterEmployeeUseCase, UpdateEmployeeU
         
         List<WorkShift> currentWorkShifts = new ArrayList<>(employee.getWorkShifts());
         currentWorkShifts.add(workShift);
-        
-        // Validar que no hay turnos superpuestos
-        validateWorkShifts(currentWorkShifts);
-        
         employee.setWorkShifts(currentWorkShifts);
         employeeRepository.save(employee);
     }
@@ -108,10 +99,6 @@ public class EmployeeService implements RegisterEmployeeUseCase, UpdateEmployeeU
     @Override
     public void updateWorkShifts(EmployeeId employeeId, List<WorkShift> workShifts) {
         Employee employee = getEmployeeByIdOrThrow(employeeId);
-        
-        // Validar que no hay turnos superpuestos
-        validateWorkShifts(workShifts);
-        
         employee.setWorkShifts(workShifts);
         employeeRepository.save(employee);
     }
@@ -144,43 +131,12 @@ public class EmployeeService implements RegisterEmployeeUseCase, UpdateEmployeeU
         return employee.get();
     }
 
-    private boolean isEmailAlreadyRegistered(String email) {
-        // Esta validación debería implementarse en el repositorio
-        // Por ahora asumimos que no hay duplicados
-        return false;
+    private boolean isEmailAlreadyRegistered(Email email) {
+        return employeeRepository.existsByEmail(email);
     }
 
-    private boolean isEmailAlreadyRegisteredByOtherEmployee(String email, EmployeeId currentEmployeeId) {
-        // Esta validación debería implementarse en el repositorio
-        // Por ahora asumimos que no hay duplicados
-        return false;
+    private boolean isEmailAlreadyRegisteredByOtherEmployee(Email email, EmployeeId currentEmployeeId) {
+        return employeeRepository.existsByEmailAndNotId(email, currentEmployeeId);
     }
 
-    private void validateWorkShifts(List<WorkShift> workShifts) {
-        if (workShifts == null || workShifts.isEmpty()) {
-            return;
-        }
-        
-        // Ordenar turnos por día de la semana y hora de inicio
-        workShifts.sort((ws1, ws2) -> {
-            int dayComparison = ws1.getDayOfWeek().compareTo(ws2.getDayOfWeek());
-            if (dayComparison != 0) {
-                return dayComparison;
-            }
-            return ws1.getStartTime().compareTo(ws2.getStartTime());
-        });
-        
-        // Verificar superposiciones
-        for (int i = 1; i < workShifts.size(); i++) {
-            WorkShift previous = workShifts.get(i - 1);
-            WorkShift current = workShifts.get(i);
-            
-            if (previous.getDayOfWeek().equals(current.getDayOfWeek()) && 
-                previous.isOverlapWith(current)) {
-                throw new WorkshiftOverlapedException(
-                    "Overlapping work shifts found on " + current.getDayOfWeek()
-                );
-            }
-        }
-    }
 }

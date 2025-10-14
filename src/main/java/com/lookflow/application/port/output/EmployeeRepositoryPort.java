@@ -1,6 +1,7 @@
 package com.lookflow.application.port.output;
 
 import com.lookflow.domain.model.entity.Employee;
+import com.lookflow.domain.model.valueobject.Email;
 import com.lookflow.domain.model.valueobject.EmployeeId;
 
 import java.util.List;
@@ -21,4 +22,8 @@ public interface EmployeeRepositoryPort {
     void delete(EmployeeId employeeId);
     
     boolean existsById(EmployeeId employeeId);
+
+    boolean existsByEmail(Email email);
+
+    boolean existsByEmailAndNotId(Email email, EmployeeId currentEmployeeId);
 }
