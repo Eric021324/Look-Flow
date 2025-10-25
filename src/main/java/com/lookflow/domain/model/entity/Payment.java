@@ -22,4 +22,24 @@ public class Payment extends AggregateRoot<PaymentId>{
         this.amount = amount;
         this.date = date;
     }
+
+    public PaymentId getPaymentId() {
+        return paymentId;
+    }
+
+    public AppointmentId getAppointmentId() {
+        return appointmentId;
+    }
+
+    public CustomerId getCustomerId() {
+        return customerId;
+    }
+
+    public Money getAmount() {
+        return amount;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
 }

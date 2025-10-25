@@ -24,7 +24,7 @@ public class Service extends AggregateRoot<ServiceId>{
         setDuration(duration);
         setCost(cost);
         setServiceCategory(serviceCategory);
-        setActive(true);
+        setActive(active);
     }
 
     public void setActive(boolean active) {
@@ -59,5 +59,25 @@ public class Service extends AggregateRoot<ServiceId>{
 
     public boolean isActive() {
         return active;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public Money getCost() {
+        return cost;
+    }
+
+    public ServiceCategory getServiceCategory() {
+        return serviceCategory;
     }
 }

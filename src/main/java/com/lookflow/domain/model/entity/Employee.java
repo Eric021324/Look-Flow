@@ -69,22 +69,51 @@ public class Employee extends AggregateRoot<EmployeeId>{
 
     private void setSecondSurname(String secondSurname) {
         if(secondSurname == null) throw new DomainException("Second surname cannot be null");
-        if(secondSurname.isEmpty()) throw new DomainException("Second surname cannot be null");
+        if(secondSurname.isEmpty()) throw new DomainException("Second surname cannot be empty");
+        this.secondSurname = secondSurname;
     }
 
     private void setFirstSurname(String firstSurname) {
         if(firstSurname == null) throw new DomainException("First surname cannot be null");
         if(firstSurname.isEmpty()) throw new DomainException("First surname cannot be empty");
+        this.firstSurname = firstSurname;
     }
 
     private void setName(String name) {
         if(name == null) throw new DomainException("Name cannot be null");
         if(name.isEmpty()) throw new DomainException("Name cannot be empty");
-        this.name=name;
+        this.name = name;
     }
 
     public List<WorkShift> getWorkShifts() {
         return workShifts;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getFirstSurname() {
+        return firstSurname;
+    }
+
+    public String getSecondSurname() {
+        return secondSurname;
+    }
+
+    public Email getEmail() {
+        return email;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public List<Service> getServices() {
+        return services;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
 }

@@ -56,10 +56,12 @@ public class Appointment extends AggregateRoot<AppointmentId> {
 
     private void setServiceIds(List<ServiceId> serviceIds) {
         if(serviceIds == null) throw new  IllegalArgumentException("Service Ids cannot be null");
+        this.serviceIds = serviceIds;
     }
 
     private void setEmployeeId(EmployeeId employeeId) {
         if(employeeId == null) throw new IdException("Employee Id cannot be null");
+        this.employeeId = employeeId;
     }
 
     private void setStartAndEndDate(LocalDateTime startDate,LocalDateTime endDate){
