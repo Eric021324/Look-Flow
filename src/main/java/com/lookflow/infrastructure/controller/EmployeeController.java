@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -109,7 +110,7 @@ public class EmployeeController {
         }
     }
 
-    @PutMapping("/{id}/work-shifts")
+    /*@PutMapping("/{id}/work-shifts")
     @Operation(summary = "Manage employee work shifts", description = "Updates employee work shifts")
     @ApiResponses(value = {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Work shifts updated successfully"),
@@ -117,6 +118,7 @@ public class EmployeeController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Invalid work shifts"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Internal server error")
     })
+
     public ResponseEntity<ApiResponse<EmployeeResponse>> manageWorkShifts(
             @Parameter(description = "Employee ID") @PathVariable UUID id,
             @Valid @RequestBody RegisterEmployeeRequest request) {
@@ -133,7 +135,7 @@ public class EmployeeController {
                     .body(ApiResponse.error("Failed to update work shifts: " + e.getMessage()));
         }
     }
-
+*/
     @GetMapping("/{id}")
     @Operation(summary = "Get employee by ID", description = "Retrieves an employee by their ID")
     @ApiResponses(value = {
@@ -144,9 +146,9 @@ public class EmployeeController {
     public ResponseEntity<ApiResponse<EmployeeResponse>> getEmployeeById(
             @Parameter(description = "Employee ID") @PathVariable UUID id) {
         try {
-            Employee employee = queryEmployeeUseCase.getEmployeeById(new EmployeeId(id));
-            if (employee != null) {
-                EmployeeResponse response = employeeResponseMapper.toResponse(employee);
+            Optional<Employee> employee = queryEmployeeUseCase.getEmployeeById(new EmployeeId(id));
+            if (employee.isPresent()) {
+                EmployeeResponse response = employeeResponseMapper.toResponse(employee.get());
                 return ResponseEntity.ok(ApiResponse.success(response));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)

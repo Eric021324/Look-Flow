@@ -1,16 +1,22 @@
 package com.lookflow.infrastructure.dto.request;
 
+import java.util.UUID;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotEmpty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
+@Setter
+@Getter
 @Schema(description = "Request to register a new employee")
 public class RegisterEmployeeRequest {
 
+    // Getters and Setters
     @NotBlank(message = "Name is required")
     @Schema(description = "Employee first name", example = "John")
     private String name;
@@ -55,60 +61,4 @@ public class RegisterEmployeeRequest {
         this.serviceIds = serviceIds;
     }
 
-    // Getters and Setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFirstSurname() {
-        return firstSurname;
-    }
-
-    public void setFirstSurname(String firstSurname) {
-        this.firstSurname = firstSurname;
-    }
-
-    public String getSecondSurname() {
-        return secondSurname;
-    }
-
-    public void setSecondSurname(String secondSurname) {
-        this.secondSurname = secondSurname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public AddressRequest getAddress() {
-        return address;
-    }
-
-    public void setAddress(AddressRequest address) {
-        this.address = address;
-    }
-
-    public List<WorkShiftRequest> getWorkShifts() {
-        return workShifts;
-    }
-
-    public void setWorkShifts(List<WorkShiftRequest> workShifts) {
-        this.workShifts = workShifts;
-    }
-
-    public List<UUID> getServiceIds() {
-        return serviceIds;
-    }
-
-    public void setServiceIds(List<UUID> serviceIds) {
-        this.serviceIds = serviceIds;
-    }
 }

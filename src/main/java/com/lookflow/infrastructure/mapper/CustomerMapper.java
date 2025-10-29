@@ -18,7 +18,7 @@ public interface CustomerMapper {
     @Mapping(target = "email", source = "email.value")
     CustomerDto toDto(Customer customer);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToCustomerId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "email", source = "email", qualifiedByName = "stringToEmail")
     Customer toDomain(CustomerDto customerDto);
 
@@ -30,7 +30,7 @@ public interface CustomerMapper {
     @Mapping(target = "email", source = "email")
     CustomerEntity dtoToEntity(CustomerDto customerDto);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToCustomerId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "email", source = "email", qualifiedByName = "stringToEmail")
     Customer entityToDomain(CustomerEntity customerEntity);
 

@@ -27,7 +27,7 @@ public interface EmployeeResponseMapper {
     @Mapping(target = "address", source = "address")
     @Mapping(target = "workShifts", source = "workShifts")
     @Mapping(target = "serviceIds", expression = "java(mapServiceIds(employee.getServices()))")
-    @Mapping(target = "rol", expression = "java(employee.getRol() != null ? employee.getRol().name() : null)")
+    @Mapping(target = "rol", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     EmployeeResponse toResponse(Employee employee);

@@ -17,4 +17,6 @@ public interface QueryAppointmentUseCase {
     List<Appointment> getAppointmentsByEmployee(EmployeeId employeeId);
     
     List<Appointment> getAppointmentsByDateRange(LocalDateTime startDate, LocalDateTime endDate);
+
+    List<Appointment> getAllAppointments();
 }

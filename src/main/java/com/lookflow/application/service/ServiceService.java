@@ -7,10 +7,13 @@ import com.lookflow.domain.model.entity.Service;
 import com.lookflow.domain.model.valueobject.Money;
 import com.lookflow.domain.model.valueobject.ServiceCategory;
 import com.lookflow.domain.model.valueobject.ServiceId;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
+@org.springframework.stereotype.Service
+@Transactional
 public class ServiceService implements CreateServiceUseCase, UpdateServiceUseCase, 
         ActivateServiceUseCase, QueryServiceUseCase {
 
@@ -78,10 +81,11 @@ public class ServiceService implements CreateServiceUseCase, UpdateServiceUseCas
     }
 
     @Override
-    public void activateService(ServiceId serviceId) {
+    public Service activateService(ServiceId serviceId) {
         Service service = getServiceByIdOrThrow(serviceId);
         service.setActive(true);
         serviceRepository.save(service);
+        return service;
     }
 
     @Override

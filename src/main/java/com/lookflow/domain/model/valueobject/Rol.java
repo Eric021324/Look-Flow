@@ -10,5 +10,9 @@ public abstract class Rol {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public abstract boolean canProvide(ServiceCategory serviceCategory);
 }

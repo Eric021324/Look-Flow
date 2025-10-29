@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@org.springframework.stereotype.Service
 public class EmployeeService implements RegisterEmployeeUseCase, UpdateEmployeeUseCase, 
         ManageEmployeeWorkShiftsUseCase, QueryEmployeeUseCase {
 

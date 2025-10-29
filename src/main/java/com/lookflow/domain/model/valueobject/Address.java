@@ -5,13 +5,7 @@ import com.lookflow.domain.exception.DomainException;
 
 import java.util.Objects;
 
-public final class Address {
-
-    private final String street;
-    private final String city;
-    private final String state;
-    private final String postalCode;
-    private final String country;
+public record Address(String street, String city, String state, String postalCode, String country) {
 
     public Address(String street, String city, String state, String postalCode, String country) {
         if (street == null || street.isBlank())
@@ -32,26 +26,6 @@ public final class Address {
         this.country = country.trim();
     }
 
-    public String street() {
-        return street;
-    }
-
-    public String city() {
-        return city;
-    }
-
-    public String state() {
-        return state;
-    }
-
-    public String postalCode() {
-        return postalCode;
-    }
-
-    public String country() {
-        return country;
-    }
-
     // Value Objects se comparan por valor
     @Override
     public boolean equals(Object o) {
@@ -63,11 +37,6 @@ public final class Address {
                 && state.equals(that.state)
                 && postalCode.equals(that.postalCode)
                 && country.equals(that.country);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(street, city, state, postalCode, country);
     }
 
     @Override

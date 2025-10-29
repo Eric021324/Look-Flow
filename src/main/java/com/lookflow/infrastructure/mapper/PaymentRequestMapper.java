@@ -20,7 +20,7 @@ public interface PaymentRequestMapper {
     PaymentRequestMapper INSTANCE = Mappers.getMapper(PaymentRequestMapper.class);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "paymentId", expression = "java(new PaymentId(UUID.randomUUID()))")
+    @Mapping(target = "paymentId", ignore = true)
     @Mapping(target = "appointmentId", expression = "java(new AppointmentId(request.getAppointmentId()))")
     @Mapping(target = "customerId", expression = "java(new CustomerId(request.getCustomerId()))")
     @Mapping(target = "amount", expression = "java(new Money(request.getAmount()))")

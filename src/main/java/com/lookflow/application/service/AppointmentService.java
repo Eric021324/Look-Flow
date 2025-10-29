@@ -13,11 +13,14 @@ import com.lookflow.domain.model.valueobject.AppointmentId;
 import com.lookflow.domain.model.valueobject.CustomerId;
 import com.lookflow.domain.model.valueobject.EmployeeId;
 import com.lookflow.domain.model.valueobject.ServiceId;
+import jakarta.transaction.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@org.springframework.stereotype.Service
+@Transactional
 public class AppointmentService implements CreateAppointmentUseCase, ConfirmAppointmentUseCase, 
         CancelAppointmentUseCase, CompleteAppointmentUseCase, QueryAppointmentUseCase {
 
@@ -81,24 +84,27 @@ public class AppointmentService implements CreateAppointmentUseCase, ConfirmAppo
     }
 
     @Override
-    public void confirmAppointment(AppointmentId appointmentId) {
+    public Appointment confirmAppointment(AppointmentId appointmentId) {
         Appointment appointment = getAppointmentByIdOrThrow(appointmentId);
         appointment.confirm();
         appointmentRepository.save(appointment);
+        return appointment;
     }
 
     @Override
-    public void cancelAppointment(AppointmentId appointmentId) {
+    public Appointment cancelAppointment(AppointmentId appointmentId) {
         Appointment appointment = getAppointmentByIdOrThrow(appointmentId);
         appointment.cancel();
         appointmentRepository.save(appointment);
+        return appointment;
     }
 
     @Override
-    public void completeAppointment(AppointmentId appointmentId) {
+    public Appointment completeAppointment(AppointmentId appointmentId) {
         Appointment appointment = getAppointmentByIdOrThrow(appointmentId);
         appointment.complete();
         appointmentRepository.save(appointment);
+        return appointment;
     }
 
     @Override
@@ -119,6 +125,11 @@ public class AppointmentService implements CreateAppointmentUseCase, ConfirmAppo
     @Override
     public List<Appointment> getAppointmentsByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
         return appointmentRepository.findByDateRange(startDate, endDate);
+    }
+
+    @Override
+    public List<Appointment> getAllAppointments() {
+        return List.of();
     }
 
     private Appointment getAppointmentByIdOrThrow(AppointmentId appointmentId) {

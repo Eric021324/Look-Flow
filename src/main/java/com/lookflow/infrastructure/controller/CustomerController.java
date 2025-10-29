@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -88,8 +89,7 @@ public class CustomerController {
                     new CustomerId(id),
                     request.getName(),
                     request.getPhoneNumber(),
-                    customerRequestMapper.toDomain(request).getEmail(),
-                    request.getRegisterDate()
+                    customerRequestMapper.toDomain(request).getEmail()
             );
             
             CustomerResponse response = customerResponseMapper.toResponse(customer);
@@ -110,9 +110,9 @@ public class CustomerController {
     public ResponseEntity<ApiResponse<CustomerResponse>> getCustomerById(
             @Parameter(description = "Customer ID") @PathVariable UUID id) {
         try {
-            Customer customer = queryCustomerUseCase.getCustomerById(new CustomerId(id));
-            if (customer != null) {
-                CustomerResponse response = customerResponseMapper.toResponse(customer);
+            Optional<Customer> customer = queryCustomerUseCase.getCustomerById(new CustomerId(id));
+            if (customer.isPresent()) {
+                CustomerResponse response = customerResponseMapper.toResponse(customer.get());
                 return ResponseEntity.ok(ApiResponse.success(response));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)

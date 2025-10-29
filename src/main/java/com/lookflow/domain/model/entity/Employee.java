@@ -57,7 +57,7 @@ public class Employee extends AggregateRoot<EmployeeId>{
         this.workShifts = Collections.unmodifiableList(sorted);
     }
 
-    private void setAddress(Address address) {
+    public void setAddress(Address address) {
         if(address == null) throw new DomainException("Adress cannot be null");
         this.address = address;
     }

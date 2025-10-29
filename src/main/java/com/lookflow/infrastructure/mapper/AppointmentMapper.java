@@ -26,11 +26,11 @@ public interface AppointmentMapper {
     @Mapping(target = "appointmentState", source = "appointmentState", qualifiedByName = "appointmentStateToString")
     AppointmentDto toDto(Appointment appointment);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToAppointmentId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "customerId", source = "customerId", qualifiedByName = "uuidToCustomerId")
     @Mapping(target = "employeeId", source = "employeeId", qualifiedByName = "uuidToEmployeeId")
     @Mapping(target = "serviceIds", source = "serviceIds", qualifiedByName = "uuidsToServiceIds")
-    @Mapping(target = "appointmentState", source = "appointmentState", qualifiedByName = "stringToAppointmentState")
+    @Mapping(target = "appointmentState", ignore = true)
     Appointment toDomain(AppointmentDto appointmentDto);
 
     @Mapping(target = "id", source = "id")
@@ -47,11 +47,11 @@ public interface AppointmentMapper {
     @Mapping(target = "appointmentState", source = "appointmentState")
     AppointmentEntity dtoToEntity(AppointmentDto appointmentDto);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToAppointmentId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "customerId", source = "customerId", qualifiedByName = "uuidToCustomerId")
     @Mapping(target = "employeeId", source = "employeeId", qualifiedByName = "uuidToEmployeeId")
     @Mapping(target = "serviceIds", source = "serviceIds", qualifiedByName = "uuidsToServiceIds")
-    @Mapping(target = "appointmentState", source = "appointmentState", qualifiedByName = "stringToAppointmentState")
+    @Mapping(target = "appointmentState", ignore = true)
     Appointment entityToDomain(AppointmentEntity appointmentEntity);
 
     @Mapping(target = "id", source = "id.value")

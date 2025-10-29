@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import java.time.ZoneId;
+import java.util.TimeZone;
 
 @Configuration
 public class JacksonConfig {
@@ -18,7 +19,7 @@ public class JacksonConfig {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        mapper.setTimeZone(ZoneId.of("UTC"));
+        mapper.setTimeZone(TimeZone.getTimeZone(ZoneId.of("UTC")));
         return mapper;
     }
 }

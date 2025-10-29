@@ -23,7 +23,7 @@ public interface PaymentMapper {
     @Mapping(target = "amount", source = "amount.amount")
     PaymentDto toDto(Payment payment);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToPaymentId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "appointmentId", source = "appointmentId", qualifiedByName = "uuidToAppointmentId")
     @Mapping(target = "customerId", source = "customerId", qualifiedByName = "uuidToCustomerId")
     @Mapping(target = "amount", source = "amount", qualifiedByName = "bigDecimalToMoney")
@@ -41,7 +41,7 @@ public interface PaymentMapper {
     @Mapping(target = "amount", source = "amount")
     PaymentEntity dtoToEntity(PaymentDto paymentDto);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToPaymentId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "appointmentId", source = "appointmentId", qualifiedByName = "uuidToAppointmentId")
     @Mapping(target = "customerId", source = "customerId", qualifiedByName = "uuidToCustomerId")
     @Mapping(target = "amount", source = "amount", qualifiedByName = "bigDecimalToMoney")

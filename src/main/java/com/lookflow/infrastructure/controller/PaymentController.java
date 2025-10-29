@@ -3,6 +3,8 @@ package com.lookflow.infrastructure.controller;
 import com.lookflow.application.port.input.ProcessPaymentUseCase;
 import com.lookflow.application.port.input.QueryPaymentUseCase;
 import com.lookflow.domain.model.entity.Payment;
+import com.lookflow.domain.model.valueobject.AppointmentId;
+import com.lookflow.domain.model.valueobject.CustomerId;
 import com.lookflow.domain.model.valueobject.PaymentId;
 import com.lookflow.infrastructure.dto.request.ProcessPaymentRequest;
 import com.lookflow.infrastructure.dto.response.ApiResponse;
@@ -20,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -80,9 +83,9 @@ public class PaymentController {
     public ResponseEntity<ApiResponse<PaymentResponse>> getPaymentById(
             @Parameter(description = "Payment ID") @PathVariable UUID id) {
         try {
-            Payment payment = queryPaymentUseCase.getPaymentById(new PaymentId(id));
-            if (payment != null) {
-                PaymentResponse response = paymentResponseMapper.toResponse(payment);
+            Optional<Payment> payment = queryPaymentUseCase.getPaymentById(new PaymentId(id));
+            if (payment.isPresent()) {
+                PaymentResponse response = paymentResponseMapper.toResponse(payment.get());
                 return ResponseEntity.ok(ApiResponse.success(response));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -122,7 +125,7 @@ public class PaymentController {
     public ResponseEntity<ApiResponse<List<PaymentResponse>>> getPaymentsByAppointment(
             @Parameter(description = "Appointment ID") @PathVariable UUID appointmentId) {
         try {
-            List<Payment> payments = queryPaymentUseCase.getPaymentsByAppointment(appointmentId);
+            List<Payment> payments = queryPaymentUseCase.getPaymentsByAppointment(new AppointmentId(appointmentId));
             List<PaymentResponse> responses = payments.stream()
                     .map(paymentResponseMapper::toResponse)
                     .collect(Collectors.toList());
@@ -142,7 +145,7 @@ public class PaymentController {
     public ResponseEntity<ApiResponse<List<PaymentResponse>>> getPaymentsByCustomer(
             @Parameter(description = "Customer ID") @PathVariable UUID customerId) {
         try {
-            List<Payment> payments = queryPaymentUseCase.getPaymentsByCustomer(customerId);
+            List<Payment> payments = queryPaymentUseCase.getPaymentsByCustomer(new CustomerId(customerId));
             List<PaymentResponse> responses = payments.stream()
                     .map(paymentResponseMapper::toResponse)
                     .collect(Collectors.toList());

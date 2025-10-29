@@ -1,9 +1,9 @@
 package com.lookflow.infrastructure.mapper;
 
+import java.time.DayOfWeek;
 import com.lookflow.domain.model.entity.Employee;
 import com.lookflow.domain.model.entity.Service;
 import com.lookflow.domain.model.valueobject.Address;
-import com.lookflow.domain.model.valueobject.Email;
 import com.lookflow.domain.model.valueobject.WorkShift;
 import com.lookflow.infrastructure.dto.request.AddressRequest;
 import com.lookflow.infrastructure.dto.request.RegisterEmployeeRequest;
@@ -24,10 +24,10 @@ public interface EmployeeRequestMapper {
     @Mapping(target = "name", source = "name")
     @Mapping(target = "firstSurname", source = "firstSurname")
     @Mapping(target = "secondSurname", source = "secondSurname")
-    @Mapping(target = "email", expression = "java(new Email(request.getEmail()))")
+    @Mapping(target = "email", ignore = true)
     @Mapping(target = "address", source = "address")
     @Mapping(target = "workShifts", source = "workShifts")
-    @Mapping(target = "services", expression = "java(mapServices(request.getServiceIds()))")
+    @Mapping(target = "services", ignore = true)
     @Mapping(target = "rol", ignore = true)
     Employee toDomain(RegisterEmployeeRequest request);
 
@@ -38,7 +38,7 @@ public interface EmployeeRequestMapper {
     @Mapping(target = "country", source = "country")
     Address toAddress(AddressRequest addressRequest);
 
-    @Mapping(target = "dayOfWeek", expression = "java(com.lookflow.domain.model.valueobject.DayOfWeek.valueOf(request.getDayOfWeek()))")
+    @Mapping(target = "dayOfWeek",ignore = true)
     @Mapping(target = "startTime", source = "startTime")
     @Mapping(target = "endTime", source = "endTime")
     WorkShift toWorkShift(WorkShiftRequest workShiftRequest);

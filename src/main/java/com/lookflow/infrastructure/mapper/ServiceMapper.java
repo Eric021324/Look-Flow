@@ -21,7 +21,7 @@ public interface ServiceMapper {
     @Mapping(target = "serviceCategory", source = "serviceCategory", qualifiedByName = "serviceCategoryToString")
     ServiceDto toDto(Service service);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToServiceId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "cost", source = "cost", qualifiedByName = "bigDecimalToMoney")
     @Mapping(target = "serviceCategory", source = "serviceCategory", qualifiedByName = "stringToServiceCategory")
     Service toDomain(ServiceDto serviceDto);
@@ -36,7 +36,7 @@ public interface ServiceMapper {
     @Mapping(target = "serviceCategory", source = "serviceCategory")
     ServiceEntity dtoToEntity(ServiceDto serviceDto);
 
-    @Mapping(target = "id", source = "id", qualifiedByName = "uuidToServiceId")
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "cost", source = "cost", qualifiedByName = "bigDecimalToMoney")
     @Mapping(target = "serviceCategory", source = "serviceCategory", qualifiedByName = "stringToServiceCategory")
     Service entityToDomain(ServiceEntity serviceEntity);

@@ -19,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -119,7 +120,7 @@ public class ServiceController {
             @Parameter(description = "Service ID") @PathVariable UUID id,
             @Parameter(description = "Activate service") @RequestParam boolean active) {
         try {
-            Service service = activateServiceUseCase.activateService(new ServiceId(id), active);
+            Service service = activateServiceUseCase.activateService(new ServiceId(id));
             ServiceResponse response = serviceResponseMapper.toResponse(service);
             return ResponseEntity.ok(ApiResponse.success("Service status updated successfully", response));
         } catch (Exception e) {
@@ -138,9 +139,9 @@ public class ServiceController {
     public ResponseEntity<ApiResponse<ServiceResponse>> getServiceById(
             @Parameter(description = "Service ID") @PathVariable UUID id) {
         try {
-            Service service = queryServiceUseCase.getServiceById(new ServiceId(id));
-            if (service != null) {
-                ServiceResponse response = serviceResponseMapper.toResponse(service);
+            Optional<Service> service = queryServiceUseCase.getServiceById(new ServiceId(id));
+            if (service.isPresent()) {
+                ServiceResponse response = serviceResponseMapper.toResponse(service.get());
                 return ResponseEntity.ok(ApiResponse.success(response));
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
